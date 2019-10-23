@@ -208,6 +208,7 @@ let markCommentLike = (req, res) => {
                 let newlikeObj = new LikeCommentModel({
                     commentId: req.body.commentId,
                     userId: req.body.userId,
+                    postId:req.body.postId
 
                 })
                 newlikeObj.save((err, newlike) => {
@@ -339,6 +340,39 @@ let findAllLikeofAComment = (req, res) => {
 }
 
 
+let findAllLikeofAPost = (req, res) => {
+    console.log("fun called")
+    if (check.isEmpty(req.params.postId )) {
+        let apiResponse = response.generate(true, "commentId missing", 500, null);
+        reject(apiResponse);
+    } else {
+
+        console.log("gfsdycuijscvsucja",req.params.postId)
+        LikeCommentModel.find({'postId': req.params.postId})
+            .select('-__v -_id')
+            .lean()
+            .exec((err, result) => {
+                
+                if (err) {
+                    console.log(err)
+                    logger.error(err.message, 'commentController: findAllLikeofAComment', 10)
+                    let apiResponse = response.generate(true, 'Failed to find like of a comment with this commentId', 500, null)
+                    res.send(apiResponse)
+                } else if (check.isEmpty(result)) {
+                    logger.info('No like found', 'commentController: findAllLikeofAComment')
+                    let apiResponse = response.generate(true, 'No like found', 404, null)
+                    res.send(apiResponse)
+                } else {
+                    let apiResponse = response.generate(false, 'All LikedComment Details Found', 200, result)
+                    res.send(apiResponse)
+                }
+
+            })
+    }
+}
+
+
+
 module.exports = {
     addComment: addComment,
     getAllCommentOfAPost: getAllCommentOfAPost,
@@ -347,5 +381,6 @@ module.exports = {
     deleteCommentLike: deleteCommentLike,
     getAllCommentLike: getAllCommentLike,
     getAllLikeofAComment: getAllLikeofAComment,
-    findAllLikeofAComment: findAllLikeofAComment
+    findAllLikeofAComment: findAllLikeofAComment,
+    findAllLikeofAPost:findAllLikeofAPost
 }

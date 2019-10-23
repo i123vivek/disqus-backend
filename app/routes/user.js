@@ -38,7 +38,7 @@ module.exports.setRouter = (app) => {
 
     app.post(`${baseUrl}/add/comment/like`, auth.isAuthorized, commentController.markCommentLike);
 
-    app.post(`${baseUrl}/delete/comment/like`, auth.isAuthorized, commentController.deleteCommentLike);
+    app.post(`${baseUrl}/delete/:commentId/comment/like`, auth.isAuthorized, commentController.deleteCommentLike);
 
     app.get(`${baseUrl}/get/all/:postId/comment`, commentController.getAllCommentOfAPost);
 
@@ -47,6 +47,8 @@ module.exports.setRouter = (app) => {
     app.get(`${baseUrl}/get/all/comment/like/:commentId/:userId`, commentController.getAllLikeofAComment);
 
     app.get(`${baseUrl}/get/comment/:commentId/likes`, commentController.findAllLikeofAComment);
+
+    app.get(`${baseUrl}/get/comments/:postId/likes`, commentController.findAllLikeofAPost);
 
     app.get(`${baseUrl}/comment/:commentId/details`, commentController.getSingleComment);
 

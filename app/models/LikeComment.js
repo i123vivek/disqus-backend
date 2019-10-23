@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 Schema = mongoose.Schema;
 
 let likeCommentSchema = new Schema({
+    postId:{
+        type: String,
+        default:''
+    },
     commentId:{
         type: String,
         default:''

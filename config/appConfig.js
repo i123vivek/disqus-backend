@@ -4,7 +4,7 @@ appConfig.port = 3000;
 appConfig.allowedCorsOrigin = "*";
 appConfig.env = "dev";
 appConfig.db = {
-    uri: 'mongodb://127.0.0.1:27017/DisqusDB3'
+    uri: 'mongodb://127.0.0.1:27017/DisqusDB2'
   }
 appConfig.apiVersion = '/api/v1';
 
